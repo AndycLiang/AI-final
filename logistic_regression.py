@@ -14,7 +14,8 @@ clf = LogisticRegression(max_iter=1000)
 clf.fit(X_train, y_train)
 
 y_pred = clf.predict(X_test)
-# print(classification_report(y_test, y_pred))
+print(classification_report(y_test, y_pred))
 
 accuracy = accuracy_score(y_test, y_pred)
 print(f"Accuracy: {accuracy:.6f}")
+# Accuracy: 0.950769

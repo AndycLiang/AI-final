@@ -64,4 +64,4 @@ with torch.no_grad():
     outputs = model(X_test_tensor)
     preds = torch.argmax(outputs, dim=1)
     accuracy = (preds == y_test_tensor).float().mean().item()
-    print(f"\nNeural Net Accuracy: {accuracy:.6f}")
+    print(f"\nNeural Net Accuracy: {accuracy:.6f}") # 0.948062

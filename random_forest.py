@@ -18,6 +18,6 @@ clf.fit(X_train, y_train)
 y_pred = clf.predict(X_test)
 accuracy = accuracy_score(y_test, y_pred)
 print(f"Random Forest Accuracy: {accuracy:.6f}")
-# Accuracy: 0.982154
+# Accuracy: 0.951138
 
 print(classification_report(y_test, y_pred))
