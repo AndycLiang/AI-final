@@ -1,4 +1,5 @@
 import pandas as pd
+from sentence_transformers import SentenceTransformer
 
 df1 = pd.read_csv('2020-12-31-DynamicallyGeneratedHateDataset-entries-v0.1.csv')
 df2 = pd.read_csv('2020-12-31-DynamicallyGeneratedHateDataset-targets-v0.1.csv')
@@ -16,7 +17,18 @@ intersectional_count = (df2['is_intersectional'] == 1).sum()
 print(f"Number of intersectional rows: {intersectional_count}")
 
 merged_df = pd.merge(df1, df2, on='id', how='inner')
+merged_df = merged_df.dropna(subset=['text', 'is_intersectional'])
 merged_df.to_csv('processed_data.csv', index=False)
+
+texts = merged_df['text'].astype(str)
+labels = merged_df['is_intersectional'].astype(int)
+
+model = SentenceTransformer('all-MiniLM-L6-v2')
+embeddings = model.encode(texts.tolist(), show_progress_bar=True)
+embeddings_df = pd.DataFrame(embeddings, columns=[f'embedding_{i}' for i in range(embeddings.shape[1])])
+embeddings_df['is_intersectional'] = labels.reset_index(drop=True)
+embeddings_df.to_csv('sentence_embeddings_with_labels.csv', index=False)
 
 # 724 / 40623 = 1.78% of samples are labeled as intersectional hate
 print("Merged CSV created successfully with shape:", merged_df.shape)
+print("Saved dense embeddings with labels to 'sentence_embeddings_with_labels.csv'")

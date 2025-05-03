@@ -1,2 +1,4 @@
 2020-12-31-DynamicallyGeneratedHateDataset-entries-v0.1.csv
 2020-12-31-DynamicallyGeneratedHateDataset-targets-v0.1.csv
+sentence_embeddings_with_labels.csv
+.venv
