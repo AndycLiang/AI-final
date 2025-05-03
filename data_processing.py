@@ -11,7 +11,11 @@ target_columns = df2.columns.drop(['id'])
 target_counts = df2[target_columns].sum(axis=1)
 is_multiple_targets = target_counts > 1
 is_other_flagged = df2['other'] == 1
-df2['is_intersectional'] = (is_multiple_targets | is_other_flagged).astype(int)
+is_gaywom = df2['gaywom'] == 1
+is_blawom = df2['blawom'] == 1
+is_asiwom = df2['asiwom'] == 1
+is_muswom = df2['muswom'] == 1
+df2['is_intersectional'] = (is_multiple_targets | is_other_flagged | is_gaywom | is_blawom | is_asiwom | is_muswom).astype(int)
 
 intersectional_count = (df2['is_intersectional'] == 1).sum()
 print(f"Number of intersectional rows: {intersectional_count}")
@@ -29,6 +33,6 @@ embeddings_df = pd.DataFrame(embeddings, columns=[f'embedding_{i}' for i in rang
 embeddings_df['is_intersectional'] = labels.reset_index(drop=True)
 embeddings_df.to_csv('sentence_embeddings_with_labels.csv', index=False)
 
-# 724 / 40623 = 1.78% of samples are labeled as intersectional hate
+# 1679 / 40623 = 4.1% of samples are labeled as intersectional hate
 print("Merged CSV created successfully with shape:", merged_df.shape)
 print("Saved dense embeddings with labels to 'sentence_embeddings_with_labels.csv'")
