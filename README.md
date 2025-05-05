@@ -1,1 +1,1 @@
-AI final project for hate speech classification
+AI final project for intersectional hate speech classification
